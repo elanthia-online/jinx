@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 require("fileutils")
 require("json")
+require('digest')
 require_relative("common/color")
 require_relative("common/log")
 
@@ -12,7 +13,11 @@ available.each {|script|
   Log.out("packaging %s" % File.basename(script), label: %i(jinx info))
   cdn_path = "/assets/%s" % File.basename(script)
   FileUtils.cp(script, "dist%s" % cdn_path)
-  manifest[:available] << {file: cdn_path}
+  manifest[:available] << {
+    file: cdn_path, 
+    last_modified: File.mtime(script).to_i,
+    md5: Digest::MD5.file(script).hexdigest,
+  }
 }
 
 Log.out("creating jinx manifest", label: %i(jinx info))

@@ -4,13 +4,13 @@ require("json")
 require_relative("common/color")
 require_relative("common/log")
 
-FileUtils.mkdir_p("dist/available")
+FileUtils.mkdir_p("dist/assets")
 available = Dir.glob("lib/*")
 manifest = {available: [], last_updated: Time.now.to_i}
 
 available.each {|script|
   Log.out("packaging %s" % File.basename(script), label: %i(jinx info))
-  cdn_path = "/available/%s" % File.basename(script)
+  cdn_path = "/assets/%s" % File.basename(script)
   FileUtils.cp(script, "dist%s" % cdn_path)
   manifest[:available] << cdn_path
 }

@@ -12,7 +12,7 @@ available.each {|script|
   Log.out("packaging %s" % File.basename(script), label: %i(jinx info))
   cdn_path = "/assets/%s" % File.basename(script)
   FileUtils.cp(script, "dist%s" % cdn_path)
-  manifest[:available] << cdn_path
+  manifest[:available] << {file: cdn_path}
 }
 
 Log.out("creating jinx manifest", label: %i(jinx info))

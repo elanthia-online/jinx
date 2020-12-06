@@ -14,8 +14,7 @@ available.each {|script|
   cdn_path = "/assets/%s" % File.basename(script)
   FileUtils.cp(script, "dist%s" % cdn_path)
   manifest[:available] << {
-    file: cdn_path, 
-    last_modified: File.mtime(script).to_i,
+    file: cdn_path,
     md5: Digest::MD5.file(script).hexdigest,
   }
 }

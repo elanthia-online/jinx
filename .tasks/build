@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+require("fileutils")
+require("json")
+require_relative("common/color")
+require_relative("common/log")
+
+FileUtils.mkdir_p("dist/")
+available = Dir.glob("lib/*")
+manifest = {available: available, last_updated: Time.now.to_i}
+
+Log.out("creating jinx manifest", label: %i(jinx info))
+File.write("dist/manifest.json", 
+  JSON.pretty_generate(manifest))
+
+available.each {|script|
+  Log.out("packaging %s" % File.basename(script), label: %i(jinx info))
+  FileUtils.cp(script, "dist/" % File.basename(script))
+}

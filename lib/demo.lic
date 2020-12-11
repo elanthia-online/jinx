@@ -1,1 +1,15 @@
-respond ":success"
+=begin
+  Jinx repo demo
+=end
+
+module Demo
+  ##
+  # runs the jinx demo
+
+  def self.main()
+    respond :success
+  end
+
+
+  Demo.main()
+end

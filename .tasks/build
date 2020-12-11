@@ -23,7 +23,7 @@ manifest = {available: [], last_updated: Time.now.to_i}
 
   compiled = Header.compile(script, "dist/headers")
   # parse =begin/=end comment headers for backwards compat
-  record[:header] = "/assets/headers/%s" % compiled if compiled.is_a?(String)
+  record[:header] = "/headers/%s" % compiled if compiled.is_a?(String)
   manifest[:available] << record
 }
 

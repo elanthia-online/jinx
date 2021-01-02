@@ -1229,7 +1229,7 @@
       <duration>30</duration>
       <message type='start'>You release your pinpoint focus on your healing energies and allow their stimulated flow to settle to normal rates\.</message>
 	</spell>
-   <spell availability='all' name='Force Orb' number='1201' type='attack'>
+   <spell availability='all' name='Soothing Word' number='1201' type='attack'>
       <cost type='mana'>1</cost>
    </spell>
    <spell availability='self-cast' name='Iron Skin' number='1202' type='defense'>
@@ -1249,10 +1249,12 @@
       <message type='start'>Opening your mind&apos;s eye to the progression of time, a myriad of possible future events fills your consciousness\.</message>
       <message type='end'>Like sand through an hourglass, your visions of the future slip away and fade from your mind\.</message>
    </spell>
-   <spell availability='all' name='Soothing Word' number='1205' type='utility'>
+   <spell availability='all' name='Glamour' number='1205' type='utility'>
       <cost type='mana'>5</cost>
    </spell>
-   <spell availability='all' name='Telekinesis' number='1206'/>
+   <spell availability='all' name='Telekinesis' number='1206' type='attack'>
+      <cost type='mana'>6</cost>
+   </spell>
    <spell availability='all' name='Force Projection' number='1207' type='attack'>
       <cost type='mana'>7</cost>
    </spell>

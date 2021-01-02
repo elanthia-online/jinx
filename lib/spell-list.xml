@@ -944,8 +944,8 @@
       <message type='end'>Dark, swirling mist billows before you from nothingness, tiny pinpoints of light glimmering from its inky depths\.  Slight crackling can be heard from within and the scent of ozone tickles at your nose\.  Suddenly, a blinding arc of lightning tears through the air and stikes you, causing your invisibility to fade\.</message>
       <message type='end'>Trying to move through [\w\s]+ reveals you\.$|discovers your hiding place!$|your invisibility fails!</message>
    </spell>
-   <spell availability='all' name='Boil Earth' number='917' type='attack'>
-      <cost type='mana'>17 + (if Skills.elearth &gt; 0 then 5 else 0 end) + (if Skills.elearth &gt; 23 then 5 else 0 end) + (if Skills.elearth &gt; 100 then 5 else 0 end)</cost>
+   <spell availability='all' name='Earthen Fury' number='917' type='attack'>
+      <cost type='mana'>17</cost>
    </spell>
    <spell availability='all' name='Duplicate' number='918' type='utility'>
       <cost type='mana'>18</cost>

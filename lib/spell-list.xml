@@ -647,25 +647,20 @@
       <message type='start'>The air about you shimmers slightly\.</message>
       <message type='end'>The air about you stops shimmering\.</message>
    </spell>
-   <spell availability='self-cast' name='Foraging' number='603' type='utility'>
-      <duration span='stackable'>Stats.level / 4</duration>
+   <spell availability='all' name='Wild Entropy' number='603' type='attack'>
       <cost type='mana'>3</cost>
-      <message type='start'>You feel your vision sharpen\.</message>
-      <message type='start'>You feel more in tune with the natural surroundings\.</message>
-      <message type='end'>You feel your vision return to normal\.</message>
-      <message type='end'>You feel less in tune with your natural surroundings\.</message>
    </spell>
-   <spell availability='self-cast' name='Skinning' number='604' type='utility'>
-      <duration span='stackable'>1</duration>
-      <cost type='mana'>4</cost>
-      <message type='start'>You feel more nimble\.</message>
-      <message type='end'>You feel less nimble\.</message>
-   </spell>
-   <spell availability='self-cast' name='Whispering Willow' number='605' type='utility'>
+   <spell availability='self-cast' name='Nature&apos;s Bounty' number='604' type='utility'>
       <duration span='stackable' multicastable='yes'>20 + Spells.ranger</duration>
+      <cost type='mana'>4</cost>
+      <message type='start'>You feel your vision sharpen\.</message>
+      <message type='end'>You feel your vision return to normal\.</message>
+   </spell>
+   <spell availability='self-cast' name='Barkskin' number='605' type='defense'>
+      <duration span='refreshable' multicastable='no'>1</duration>
       <cost type='mana'>5</cost>
-      <message type='start'>You suddenly hear the voices of nature fill your mind\.</message>
-      <message type='end'>You no longer hear voices in your mind\.</message>
+      <message type='start'>A knobby layer of bark swiftly forms on you\.</message>
+      <message type='end'>The knobby layer of bark on you creaks and twists briefly before disintegrating.\.</message>
    </spell>
    <spell availability='self-cast' name='Phoen&apos;s Strength' number='606' type='offense'>
       <duration span='stackable' multicastable='yes'>20 + Spells.ranger</duration>
@@ -684,14 +679,17 @@
    <spell availability='all' name='Sun Burst' number='609' type='attack/utility' incant='no'>
       <cost type='mana'>9</cost>
    </spell>
-   <spell availability='all' name='Tangleweed' number='610' type='attack' incant='no'>
+   <spell availability='all' name='Tangleweed' number='610' type='attack'>
       <cost type='mana'>10</cost>
    </spell>
-   <spell availability='group' name='Mass Colors' number='611' type='defense'>
+   <spell availability='all' name='Moonbeam' number='611' type='attack'>
       <cost type='mana'>11</cost>
    </spell>
-   <spell availability='all' name='Breeze' number='612' type='utility'>
+   <spell availability='self-cast' name='Breeze' number='612' type='utility'>
+      <duration span='stackable' multicastable='yes'>20 + Spells.ranger</duration>
       <cost type='mana'>12</cost>
+      <message type='start'>A breeze stirs the air about you, swirling and tugging at your clothing\.</message>
+      <message type='end'>The swirling breeze around you finally settles\.</message>
    </spell>
    <spell availability='self-cast' name='Self Control' number='613' type='defense/utility'>
       <duration span='stackable' multicastable='yes'>20 + Spells.ranger</duration>

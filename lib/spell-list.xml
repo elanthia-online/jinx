@@ -1346,11 +1346,8 @@
    <spell availability='all' name='Pious Trial' number='1602' type='attack'>
       <cost type='mana'>2</cost>
    </spell>
-   <spell availability='self-cast' name='Faith&apos;s Clarity' number='1603' type='utility'>
-      <duration>0.5</duration>
+   <spell availability='all' name='Templar&apos;s Verdict' number='1603' type='attack'>
       <cost type='mana'>3</cost>
-      <message type='start'>The divine power grants you lucid understanding of the spiritual and you become much more clearly focused\.</message>
-      <message type='end'>Your sense of clarity fades\.</message>
    </spell>
    <spell availability='all' name='Consecrate' number='1604' type='utility'>
       <cost type='mana'>4</cost>
@@ -1372,20 +1369,21 @@
    </spell>
    <spell availability='self-cast' name='Rejuvenation' number='1607' type='utility'>
       <duration>5.13</duration>
-      <cost type='mana'>[7,((0.5 - (0.01 * (Skills.smc / 3))) * [15+(bonus=0;[1,3,6,10,15,21,28,36,45,55,66,78,91,105,120,136,153,171,190].each { |n| bonus += 1 if Skills.slblessings >= n }; bonus*3), [(maxhealth == checkhealth) ? 0 : (maxhealth-checkhealth), (maxstamina == checkstamina) ? 0 : (maxstamina-checkstamina)].max].min).floor].max</cost>
+      <cost type='mana'>7</cost>
       <message type='start'>Granules of cobalt light coalesce around you and as they begin to seep into your exposed skin, you feel invigorated\.</message>
       <message type='end'>Cobalt light separates itself from your skin and scatters into oblivion\.</message>
    </spell>
-   <spell availability='group' name='Beacon of Courage' number='1608' type='utility'>
-      <duration span='refreshable' multicastable='no'>1</duration>
+   <spell availability='self-cast' name='Defense of the Faithful' number='1608' type='defense/utility'>
+      <duration span='stackable' multicastable='yes'>20 + Spells.paladin</duration>
       <cost type='mana'>8</cost>
-      <bonus type='fof-offset'>1 + (bonus = 0; [10,21,33,46,60,75,91,108,126,145,165,186,208,231,255].each { |n| bonus += 1 if Skills.slblessings &gt;= n }; bonus)</bonus>
+      <bonus type='fof-offset'>0</bonus>
       <message type='start'>Motes of lambent white-gold light appear and begin to swirl around you, coalescing into a radiant aura.</message>
       <message type='end'>The aura of lambent white-gold light motes surrounding you dissipates slowly, winking out of existence.</message>
    </spell>
    <spell availability='group' name='Divine Shield' number='1609' type='defense'>
-      <duration span='stackable' multicastable='yes'>20 + Spells.paladin</duration>
+      <duration max="599">599</duration>
       <cost type='mana'>9</cost>
+      <bonus type='physical-ds'>15+(bonus = 0; [6,13,21,30,40].each { |n| bonus += 1 if Skills.slblessings &gt;= n }; bonus)</bonus>
       <bonus type='block'>10 + (bonus = 0; [3,7,12,18,25,33,42,52,63,75,88,102,117,133,150,168,187].each { |n| bonus += 1 if Skills.slblessings &gt;= n }; bonus)</bonus>
       <message type='start'>The warmth works its way toward you, and your shield arm feels much more nimble\.</message>
       <message type='end'>Your skin grows slightly numb for a moment as the warm glow fades from around you\.</message>
@@ -1405,27 +1403,19 @@
       <message type='start'>An unbridled power surges through you, infusing your body with might and improving your reactions\.</message>
       <message type='end'>You feel your abilities diminish as the energy provided by your patron fades from around you\.</message>
    </spell>
-   <spell availability='self-cast' name='Champion&apos;s Might' number='1612' type='offense'>
+   <spell availability='self-cast' name='Faith&apos;s Clarity' number='1612' type='utility'>
       <duration span='stackable' multicastable='yes'>20 + Spells.paladin</duration>
       <cost type='mana'>12</cost>
-      <bonus type='elemental-cs'>([[3+Spells.paladin,15].max,25].min/2).to_i</bonus>
-      <bonus type='spirit-cs'>[[3+Spells.paladin,15].max,25].min</bonus>
-      <bonus type='sorcerer-cs'>([[3+Spells.paladin,15].max,25].min*0.75).to_i</bonus>
-      <message type='start'>A dim celadon wisp flares briefly about each of your hands, trailing soft pulses of residual light as they move\.</message>
-      <message type='end'>The dim celadon wisps about your hands flare up once more and fade completely away\.</message>
+      <message type='start'>The divine power grants you lucid understanding of the spiritual and you become much more clearly focused\.</message>
+      <message type='end'>Your sense of clarity fades\.</message>
    </spell>
-   <spell availability='group' name='Guard the Meek' number='1613' type='defense'>
-      <duration span='stackable' multicastable='yes'>20 + Spells.paladin</duration>
-      <cost type='mana'>18</cost>
-      <bonus type='physical-ds'>15+(bonus = 0; [6,13,21,30,40].each { |n| bonus += 1 if Skills.slblessings &gt;= n }; bonus)</bonus>
-      <message type='start'>Memories of thousands of past battles momentarily occupy your thoughts, depicting the execution of perfect formations with a single Paladin leading the way\.</message>
-      <message type='start'>You rise to the forefront with a bolstered sense of defense.</message>
-      <message type='end'>Your bolstered defenses fade with the soft glow about you\.</message>
+   <spell availability='all' name='Aid the Fallen' number='1613' type='utility'>
+      <cost type='mana'>13</cost>
    </spell>
    <spell availability='all' name='Aura of the Arkati' number='1614' type='attack'>
       <cost type='mana'>14</cost>
    </spell>
-   <spell availability='all' name='Divine Strike' number='1615' type='attack'>
+   <spell availability='all' name='Repentance' number='1615' type='attack'>
       <cost type='mana'>15</cost>
    </spell>
    <spell availability='self-cast' name='Vigor' number='1616' type='utility'>
@@ -1437,18 +1427,17 @@
       <message type='end'>You feel slightly weakened as the blood in your veins thins\.</message>
    </spell>
    <spell availability='self-cast' name='Zealot' number='1617' type='offense'>
-      <duration>2 + ([Spells.paladin-17,0].max / 6.0)</duration>
+      <duration max="599">599</duration>
       <cost type='mana'>17</cost>
       <bonus type='physical-as'>30+(bonus = 0; [1,3,6,10,15,21,28,36,45,55,66,78,91,105,120,136,153,171,190].each { |n| bonus += 1 if Skills.slreligion &gt;= n }; bonus)</bonus>
-      <bonus type='physical-ds'>-30+(bonus = 0; [1,3,6,10,15,21,28,36,45,55,66,78,91,105,120,136,153,171,190].each { |n| bonus += 1 if Skills.slreligion &gt;= n }; bonus)</bonus>
       <message type='start'>A surge of radiant energy coalesces around you and (?:then fades into obscurity|those nearby)\.</message>
       <message type='end'>You feel less resolved as the divine urging subsides, fading into obscurity\.</message>
    </spell>
-   <spell availability='group' name='Crusade' number='1618' type='offense'>
-      <duration>1</duration>
+   <spell availability='group' name='Fervor' number='1618' type='offense'>
+      <duration max="599">599</duration>
       <cost type='mana'>18</cost>
-      <message type='start'>You utter a pious chant and a divine force suddenly radiates around you\.  The intensity of your patron's aid billows out from you in a wave of righteous indignation\!</message>
-      <message type='end'>You feel your spiritual strength return as you are ready to continue on your crusade\.</message>
+      <message type='start'>You utter a pious chant and a divine force suddenly radiates around you\.  The intensity of your patron&apos;s aid billows out from you in a wave of righteous indignation\!</message>
+      <message type='end'>The divine force surrounding you slowly fades away\.</message>
    </spell>
    <spell availability='self-cast' name='Faith Shield' number='1619' type='defense'>
       <duration>dur = 0.5 + (Spells.paladin - 19) / 60.0; if dur &gt; (70.0 / 60.0) then dur = (70.0 / 60.0) else dur end</duration>
@@ -1459,10 +1448,7 @@
       <message type='start'>A muted pale blue sphere surrounds you\.</message>
       <message type='end'>The muted pale blue sphere surrounding you flickers once and shudders before fading completely\.</message>
    </spell>
-   <spell availability='all' name='Aid the Fallen' number='1620' type='utility'>
-      <cost type='mana'>20</cost>
-   </spell>
-   <spell availability='all' name='Sanctify' number='1625' type='utility'>
+   <spell availability='all' name='Holy Weapon' number='1625' type='utility'>
       <cost type='mana'>25</cost>
    </spell>
    <spell availability='all' name='Judgment' number='1630' type='attack'>
@@ -1539,6 +1525,15 @@
       <duration persist-on-death='yes'>16</duration>
       <message type='start'>The time left until you decay should never match any game line; it&apos;s specifically handled by infomonitor.lic in order to get the duration and effects right\.  So unless it\&apos;s malfunctioning, don\&apos;t change this\.</message>
       <message type='end'>The time left until you decay should never match any game line; it&apos;s specifically handled by infomonitor.lic in order to get the duration and effects right\.  So unless it\&apos;s malfunctioning, don\&apos;t change this\.</message>
+   </spell>
+   <spell availability='self-cast' name='Champion&apos;s Might' number='1912' type='offense'>
+      <duration span='stackable' multicastable='yes'>20</duration>
+      <cost type='mana'>12</cost>
+      <bonus type='elemental-cs'>([[3+Spells.paladin,15].max,25].min/2).to_i</bonus>
+      <bonus type='spirit-cs'>[[3+Spells.paladin,15].max,25].min</bonus>
+      <bonus type='sorcerer-cs'>([[3+Spells.paladin,15].max,25].min*0.75).to_i</bonus>
+      <message type='start'>A dim celadon wisp flares briefly about each of your hands, trailing soft pulses of residual light as they move\.</message>
+      <message type='end'>The dim celadon wisps about your hands flare up once more and fade completely away\.</message>
    </spell>
    <spell availability='self-cast' name='Tortoise Stance' number='9401' type='defense'>
       <duration>240</duration>

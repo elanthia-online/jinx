@@ -632,7 +632,7 @@
       <duration>if Skills.emc >= 199; 0; else; 1 + (((90 - (Skills.emc/2.2)).ceil + 1) / 60.0); end</duration>
       <message type='end'>You notice the feeling of elemental fatigue fade away\.</message>
    </spell>
-   <spell availability='self-cast' name='Natural Colors' number='601' type='defense'>
+   <spell availability='all' name='Natural Colors' number='601' type='defense'>
       <duration span='stackable' multicastable='yes'>20 + Spells.ranger</duration>
       <cost type='mana'>1</cost>
       <bonus type='bolt-ds'>bonus = 10; [5, 11, 18, 26, 35, 45, 56, 68, 81, 95].each { |n| bonus += 1 if Skills.slblessings &gt;= n }; bonus</bonus>

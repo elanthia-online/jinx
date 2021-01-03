@@ -2469,6 +2469,39 @@
       <message type='end'>Your concentration slips, and you no longer feel prepared to resist \w+ damage.</message>
       <message type='end'>You cease concentrating on your preparations to resist \w+ damage.</message>
    </spell>
+   <spell availability='self-cast' name='Tracking Recovery' number='9076' type='timer'>
+      <duration>1</duration>
+      <message type='start'>You carefully study the area, searching for signs of .+ presence\.  Your keen eye spots the beginnings of a trail and you rush to follow it while taking care to remain hidden\.</message>
+      <message type='start'>You carefully study the area, searching for signs of .+ presence\.  Your keen eye spots the beginnings of a trail and you rush to follow it\.</message>
+      <message type='start'>You carefully study the area, searching for signs of .+ presence\.  You can tell the .+ is somewhere nearby but the paths all seem to lead in different directions\.  You take a chance on one, but quickly realize you've been led astray\.</message>
+      <message type='start'>You carefully study the area, searching for signs of .+ presence\.  You can tell the .+ is somewhere nearby but the paths all seem to lead in different directions\.  You take a chance on one while taking care to remain hidden, but quickly realize you've been led astray\.</message>
+      <message type='end'>You feel refreshed and ready to track again\.</message>
+   </spell>
+   <spell availability='self-cast' name='Lumnis&#39; Repose' number='9077' type='timer'>
+      <duration>30</duration>
+      <message type='start'>You trace the central orb of white in your brooch and your fingertips begin to tingle as ordered energy flows into you\.  Within seconds, you feel Lumnis' Repose course through your veins\.</message>
+      <message type='end'>Your skin tingles as the ordered energy of Lumnis' Repose slips from you and recedes into your brooch\.</message>
+   </spell>
+   <spell availability='all' name='Elemental Aura Stabilization' number='9078' type='defense'>
+      <duration>5</duration>
+      <message type='start'>Elemental energy wraps around you, stabilizing your aura\.</message>
+      <message type='end'>The elemental energy stabilizing your aura dissipates\.</message>
+   </spell>
+   <spell availability='all' name='Elemental Transfer Protection' number='9079' type='defense'>
+      <duration>5</duration>
+      <message type='start'>A thin coating of elemental energy sinks into you, keeping minor fluctuations in elemental energy at bay\.</message>
+      <message type='end'>Your thin coating of elemental energy dissipates away\.</message>
+   </spell>
+   <spell availability='all' name='Feather Charm' number='9080' type='utility'>
+      <duration>30</duration>
+      <message type='start'>Oddly enough, you feel somewhat more buoyant\.</message>
+      <message type='end'>You feel somewhat less buoyant\.</message>
+   </spell>
+   <spell availability='all' name='Encumbrance Boost' number='9081' type='utility'>
+      <duration>15</duration>
+      <message type='start'>\[You have activated an Encumbrance Boost.  Your net encumbrance will be reduced by 50 lbs for 15 minutes\.\]</message>
+      <message type='end'>\[Your Encumbrance Boost has ended\.\]</message>
+   </spell>
    <spell availability='self-cast' name='Major Loot Boost' number='9100' type='utility'>
       <duration persist-on-death='yes'>15</duration>
       <cast-proc>fput &apos;boost loot major&apos;</cast-proc>

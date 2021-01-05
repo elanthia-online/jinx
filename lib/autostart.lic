@@ -9,10 +9,12 @@
   contributors: Athias, Doug
           game: any
           tags: core
-       version: 0.51
+       version: 0.52
       required: Lich >= 4.6.58
 
   changelog:
+    0.52 (2021-01-04):
+      Fix to only run ;repository download-updates if in autostart list instead of forced.
     0.51 (2020-09-09):
       Added LostRanger gtk_version method to detect GTK version
       Forcing unset-lich-updatable to prevent overwriting GTK3-enabled Lich only if GTK3 detected
@@ -66,10 +68,12 @@ if script.vars.empty?
         run_info = true
         sleep 2.5
       end
-      if run_repo == false
+      if run_repo == false 
         # Run repository
-        start_script 'repository', ['download-updates']
-        wait_while {running? 'repository'}
+        if script_list.find { |script| script[:name] == "repository"}
+          start_script 'repository', ['download-updates']
+          wait_while {running? 'repository'}
+        end
         run_repo = true
       end
       # Loop through list

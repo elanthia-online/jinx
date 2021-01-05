@@ -9,9 +9,14 @@
                game: Gemstone
                tags: core
            required: Lich > 4.6.10
-            version: 1.18
+            version: 1.18.1
+
+  Version Control:
+    Major_change.feature_addition.bugfix
 
     changelog:
+      1.18.1 (2021-01-01):
+        Typo for infomon_bound with envelopes should be envelop
       1.18 (2021-01-01):
         update stat parsing regex to handle negative enhanced bonuses
       1.17 (2020-12-19):
@@ -1445,7 +1450,7 @@ while line = get
       $infomon_sleeping = true
     elsif line =~ /^Your thoughts slowly come back to you as you find yourself lying on the ground\.  You must have been sleeping\.$|^You wake up from your slumber\.$|^You are awoken|^You awake/
       $infomon_sleeping = false
-    elsif line == 'An unseen force envelopes you, restricting all movement.'
+    elsif line == 'An unseen force envelops you, restricting all movement.'
       $infomon_bound = true
     elsif line =~ /^The restricting force that envelops you dissolves away\.|^You shake off the immobilization that was restricting your movements!/
       $infomon_bound = false

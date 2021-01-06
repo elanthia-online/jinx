@@ -1222,6 +1222,9 @@ while line = get
         else
           servant_type = nil
         end
+      elsif spell.num == 214
+        spell.putup
+        $infomon_bound = true
       elsif spell.num == 9812
         if line =~ /^With difficulty, you manage to will yourself into the space between the corporeal and ethereal realms\.$/
           $infomon_transcendance_emergency = true
@@ -1434,6 +1437,9 @@ while line = get
           if (recovery = Spell[599]) and (recovery.timeleft > 0)
             respond "[ #{recovery.name}: +#{recovery.timeleft.as_time}, #{recovery.remaining} remaining. ]" if CharSettings['show_messages']
           end
+        elsif spell.num == 214
+          spell.putdown
+          $infomon_bound = false
         else
           spell.putdown
         end

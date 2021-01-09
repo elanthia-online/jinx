@@ -2525,12 +2525,12 @@
       <message type='end'>Your recent exploits of weaving through your foes' attacks no longer strains your body and mind\.</message>
    </spell>
    <spell availability='self-cast' name='Absorb Magic' number='9655' type='utility'>
-      <duration>10/60</duration>
+      <duration>10/60.0</duration>
       <message type='start'>You open yourself to the ravenous void at the core of your being, allowing it to surface\.  Muted veins of metallic grey ripple just beneath your skin\.</message>
       <message type='end'>The hunger of the void retreats within you, unsatisfied\.</message>
    </spell>
    <spell availability='self-cast' name='Absorb Magic Recovery' number='9656' type='timer'>
-      <duration>30/60</duration>
+      <duration>30/60.0</duration>
       <message type='start'>You open yourself to the ravenous void at the core of your being, allowing it to surface\.  Muted veins of metallic grey ripple just beneath your skin\.</message>
       <message type='end'>Something within you loosens, and you can once again feel the hunger of the void within\.</message>
    </spell>

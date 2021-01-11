@@ -957,7 +957,7 @@
       <message type='end'>The translucent sphere fades from around you\.</message>
    </spell>
    <spell availability='self-cast' name='Call Familiar' number='920' type='utility'>
-      <duration persist-on-death='yes' span='refreshable'>20 + Spells.wizard</duration>
+      <duration persist-on-death='yes' span='stackable' multicastable='no'>20 + Spells.wizard</duration>
       <cost type='mana'>20</cost>
       <message type='start'>You (concentrate on the [a-z]+ talisman as you )?cast your conciousness out into the ether in search of a (specific type of )?familiar\.</message>
       <message type='start'>You feel the magical link between you and your (?:[\-\w+])[\-\s\w]* (?:grow stronger|strengthen)\.</message>

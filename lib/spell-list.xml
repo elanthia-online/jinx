@@ -1390,7 +1390,7 @@
    </spell>
    <spell availability='self-cast' name='Higher Vision' number='1610' type='defense'>
       <duration span='stackable' multicastable='yes'>20 + Spells.paladin</duration>
-      <cost type='mana'>cost = 10; cost += (([Spells.paladin,Stats.level].min - 10) / 2).round; if cost &gt; 20 then cost = 20 end; cost</cost>
+      <cost type='mana'>cost = 10; cost += (([Spells.paladin,Stats.level].min - 10) / 2).round; if cost &gt; 55 then cost = 55 end; cost</cost>
       <bonus type='bolt-ds'>[[10+((Spells.paladin-10)/2),10].max,20].min+(bonus = 0; [5,11,18,26,35,45,56,68,81,95,110,126,143,161,180,200].each { |n| bonus += 1 if Skills.slreligion &gt;= n }; bonus)</bonus>
       <bonus type='physical-ds'>[[10+((Spells.paladin-10)/2),10].max,20].min+(bonus = 0; [5,11,18,26,35,45,56,68,81,95,110,126,143,161,180,200].each { |n| bonus += 1 if Skills.slreligion &gt;= n }; bonus)</bonus>
       <message type='start'>Visions of future battles fill your eyes, providing you with knowledge of conflicts yet unfought\.</message>

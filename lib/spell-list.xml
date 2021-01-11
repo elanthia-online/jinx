@@ -653,8 +653,8 @@
    <spell availability='self-cast' name='Nature&apos;s Bounty' number='604' type='utility'>
       <duration span='stackable' multicastable='yes'>20 + Spells.ranger</duration>
       <cost type='mana'>4</cost>
-      <message type='start'>You feel your vision sharpen\.</message>
-      <message type='end'>You feel your vision return to normal\.</message>
+      <message type='start'>You feel your vision sharpen\.|You feel more in tune with the natural surroundings\.</message>
+      <message type='end'>You feel your vision return to normal\.|You feel less in tune with your natural surroundings\.</message>
    </spell>
    <spell availability='self-cast' name='Barkskin' number='605' type='defense'>
       <duration span='refreshable' multicastable='no'>1</duration>

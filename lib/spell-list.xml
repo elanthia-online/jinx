@@ -2356,6 +2356,11 @@
       <message type='start'>You feel (?:significantly|a great deal|a fair amount) more agile\.</message>
       <message type='end'>You feel entirely capable of preparing yourself to once again move swiftly at a moment&apos;s notice\.</message>
    </spell>
+  <spell availability='self-cast' name='Duck and Weave Cooldown' number='9052' type='timer'>
+      <duration>5</duration>
+      <message type='start'>You balance your posture and narrow your eyes, preparing to misdirect your foes' attacks\.</message>
+      <message type='end'>Your recent exploits of weaving through your foes' attacks no longer strains your body and mind\.</message>
+   </spell>
    <spell availability='self-cast' name='Curse of the Star (bonus)' number='9053' type='timer'>
       <duration span='stackable'>20</duration>
       <message type='start'>You acquire a certain murky complexion, and you feel more deft\.</message>
@@ -2378,6 +2383,11 @@
    <spell availability='all' name='Chronomage Teleport Staff Cooldown' number='9058' type='timer'>
       <duration max='1440.0' persist-on-death='yes' real-time='yes'>1440</duration>
       <message type='start'>When the air around you settles and your mind calms, you realize that your very existence has been catapulted into the past\.  The sand in the hourglass is now in the upper bulb, trickling slowly into the lower chamber\.</message>
+   </spell>
+   <spell availability='self-cast' name='Tangleweed Vigor' number='9059'>
+      <duration span='refreshable'>2</duration>
+      <message type='start'>Thin tendrils of vine twine around you, instilling you with their strength\.|The vigor of your vine surges through you, imparting the strength leached from your foe\.|A runner from your vine brushes against you and you feel strengthened by the contact\.|Strength surges into you from your vine\!</message>
+      <message type='end'>A few withered tendrils of vine fall away from you, taking their gift of strength with them\.</message>
    </spell>
    <spell availability='self-cast' name='Meditative Resistance (acid)' number='9060' type='defense'>
       <duration persist-on-death='no' span='refreshable'>250</duration>
@@ -2518,10 +2528,5 @@
       <duration persist-on-death='yes' span='stackable'>1</duration>
       <message type='start'>You feel a sudden rush of power as you absorb [0-9]+ mana!</message>
       <message type='end'>You no longer feel the effect of casting mana leech\.</message>
-   </spell>
-  <spell availability='self-cast' name='Duck and Weave Cooldown' number='9052' type='timer'>
-      <duration>5</duration>
-      <message type='start'>You balance your posture and narrow your eyes, preparing to misdirect your foes' attacks\.</message>
-      <message type='end'>Your recent exploits of weaving through your foes' attacks no longer strains your body and mind\.</message>
    </spell>
 </list>

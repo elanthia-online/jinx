@@ -2526,6 +2526,7 @@
    </spell>
    <spell availability='self-cast' name='Absorb Magic' number='9655' type='utility'>
       <duration>10/60.0</duration>
+      <cast-proc>fput &quot;cman absorb magic&quot;</cast-proc>
       <message type='start'>You open yourself to the ravenous void at the core of your being, allowing it to surface\.  Muted veins of metallic grey ripple just beneath your skin\.</message>
       <message type='end'>The hunger of the void retreats within you, unsatisfied\.</message>
    </spell>

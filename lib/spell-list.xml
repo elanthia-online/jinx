@@ -653,8 +653,8 @@
    <spell availability='self-cast' name='Nature&apos;s Bounty' number='604' type='utility'>
       <duration span='stackable' multicastable='yes'>20 + Spells.ranger</duration>
       <cost type='mana'>4</cost>
-      <message type='start'>You feel your vision sharpen\.</message>
-      <message type='end'>You feel your vision return to normal\.</message>
+      <message type='start'>You feel your vision sharpen\.|You feel more in tune with the natural surroundings\.</message>
+      <message type='end'>You feel your vision return to normal\.|You feel less in tune with your natural surroundings\.</message>
    </spell>
    <spell availability='self-cast' name='Barkskin' number='605' type='defense'>
       <duration span='refreshable' multicastable='no'>1</duration>
@@ -957,7 +957,7 @@
       <message type='end'>The translucent sphere fades from around you\.</message>
    </spell>
    <spell availability='self-cast' name='Call Familiar' number='920' type='utility'>
-      <duration persist-on-death='yes' span='refreshable'>20 + Spells.wizard</duration>
+      <duration persist-on-death='yes' span='stackable' multicastable='no'>20 + Spells.wizard</duration>
       <cost type='mana'>20</cost>
       <message type='start'>You (concentrate on the [a-z]+ talisman as you )?cast your conciousness out into the ether in search of a (specific type of )?familiar\.</message>
       <message type='start'>You feel the magical link between you and your (?:[\-\w+])[\-\s\w]* (?:grow stronger|strengthen)\.</message>
@@ -1390,7 +1390,7 @@
    </spell>
    <spell availability='self-cast' name='Higher Vision' number='1610' type='defense'>
       <duration span='stackable' multicastable='yes'>20 + Spells.paladin</duration>
-      <cost type='mana'>cost = 10; cost += (([Spells.paladin,Stats.level].min - 10) / 2).round; if cost &gt; 20 then cost = 20 end; cost</cost>
+      <cost type='mana'>cost = 10; cost += (([Spells.paladin,Stats.level].min - 10) / 2).round; if cost &gt; 55 then cost = 55 end; cost</cost>
       <bonus type='bolt-ds'>[[10+((Spells.paladin-10)/2),10].max,20].min+(bonus = 0; [5,11,18,26,35,45,56,68,81,95,110,126,143,161,180,200].each { |n| bonus += 1 if Skills.slreligion &gt;= n }; bonus)</bonus>
       <bonus type='physical-ds'>[[10+((Spells.paladin-10)/2),10].max,20].min+(bonus = 0; [5,11,18,26,35,45,56,68,81,95,110,126,143,161,180,200].each { |n| bonus += 1 if Skills.slreligion &gt;= n }; bonus)</bonus>
       <message type='start'>Visions of future battles fill your eyes, providing you with knowledge of conflicts yet unfought\.</message>
@@ -2356,6 +2356,11 @@
       <message type='start'>You feel (?:significantly|a great deal|a fair amount) more agile\.</message>
       <message type='end'>You feel entirely capable of preparing yourself to once again move swiftly at a moment&apos;s notice\.</message>
    </spell>
+  <spell availability='self-cast' name='Duck and Weave Cooldown' number='9052' type='timer'>
+      <duration>5</duration>
+      <message type='start'>You balance your posture and narrow your eyes, preparing to misdirect your foes' attacks\.</message>
+      <message type='end'>Your recent exploits of weaving through your foes' attacks no longer strains your body and mind\.</message>
+   </spell>
    <spell availability='self-cast' name='Curse of the Star (bonus)' number='9053' type='timer'>
       <duration span='stackable'>20</duration>
       <message type='start'>You acquire a certain murky complexion, and you feel more deft\.</message>
@@ -2378,6 +2383,11 @@
    <spell availability='all' name='Chronomage Teleport Staff Cooldown' number='9058' type='timer'>
       <duration max='1440.0' persist-on-death='yes' real-time='yes'>1440</duration>
       <message type='start'>When the air around you settles and your mind calms, you realize that your very existence has been catapulted into the past\.  The sand in the hourglass is now in the upper bulb, trickling slowly into the lower chamber\.</message>
+   </spell>
+   <spell availability='self-cast' name='Tangleweed Vigor' number='9059'>
+      <duration span='refreshable'>2</duration>
+      <message type='start'>Thin tendrils of vine twine around you, instilling you with their strength\.|The vigor of your vine surges through you, imparting the strength leached from your foe\.|A runner from your vine brushes against you and you feel strengthened by the contact\.|Strength surges into you from your vine\!</message>
+      <message type='end'>A few withered tendrils of vine fall away from you, taking their gift of strength with them\.</message>
    </spell>
    <spell availability='self-cast' name='Meditative Resistance (acid)' number='9060' type='defense'>
       <duration persist-on-death='no' span='refreshable'>250</duration>

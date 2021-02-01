@@ -1360,7 +1360,7 @@
       <cost type='mana'>cost = 5; [5,11,18,26,35,45,56,68,81,95,110,126,143,161,180,200].each { |n| cost += 1 if Skills.slsummoning &gt;= n }; if group? then cost + 1 else cost end</cost>
       <bonus type='damagefactor'>10 + (bonus = 0; [5,11,18,26,35,45,56,68,81,95,110,126,143,161,180,200].each { |n| bonus += 1 if Skills.slsummoning &gt;= n }; bonus)</bonus>
       <message type='start'>You feel a subdued warmth through your arms and torso, accompanied by a preponderant sense of engagement\.</message>
-      <message type='end'>The warmth surrounding you fades with the spiritual force that was surrounding your arms\.</message>
+      <message type='end'>The warmth surrounding you fades with the spiritual force that was surrounding your arms\.|The subdued warmth embracing you fades along with the spiritual force surrounding your arms\.</message>
    </spell>
    <spell availability='self-cast' name='Dauntless' number='1606' type='offense'>
       <duration span='stackable' multicastable='yes'>20 + Spells.paladin</duration>

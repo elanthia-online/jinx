@@ -9,7 +9,7 @@
                game: Gemstone
                tags: core
            required: Lich > 4.6.10
-            version: 1.18.2
+            version: 1.18.3
 
   Version Control:
     Major_change.feature_addition.bugfix

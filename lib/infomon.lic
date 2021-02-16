@@ -1240,6 +1240,8 @@ while line = get
         Spell[9042].putdown
       elsif spell.num == 9655
         Spell[9656].putup
+      elsif spell.num == 1608
+        Spell[9608].putup
       elsif spell.num == 9627
         Spell[9052].timeleft = 5
         Spell[9052].putup

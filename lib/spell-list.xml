@@ -1467,6 +1467,12 @@
       <duration>10</duration>
       <cost type='mana'>50</cost>
    </spell>
+   <spell availability='group' name='Beacon of Courage' number='1699' type='timer'>
+      <duration span='refreshable'>1</duration>
+      <message type='start'>You feel \w+'s protection extend to you as an incandescent veil coalesces around you\.</message>
+      <message type='end'>An incandescent veil fades from you\.</message>
+   </spell>
+
    <spell availability='all' name='Arcane Blast' number='1700' type='attack'>
    </spell>
    <spell availability='all' name='Arcane Decoy' number='1701' type='defense'>
@@ -1623,11 +1629,6 @@
       <cast-proc>result = dothistimeout &apos;berserk&apos;, 5, /^Everything around you turns red as you work yourself into a berserker&apos;s rage!|^You rage across the battlefield, striking with unrelenting fury!/; if result; done = false; 450.times { sleep 0.1; if clear.any? { |line| line =~ /^The redness fades from the world/ }; done = true; break; end; break unless GameObj.npcs.any? { |npc| npc.status !~ /dead/ } }; unless done; fput &apos;stop berserk&apos;; end; end</cast-proc>
       <message type='start'>Everything around you turns red as you work yourself into a berserker&apos;s rage!</message>
       <message type='end'>The redness fades from the world and you begin to breathe harder\.</message>
-   </spell>
-   <spell availability='group' name='Beacon of Courage' number='9608' type='timer'>
-      <duration span='refreshable'>1</duration>
-      <message type='start'>You feel \w+'s protection extend to you as an incandescent veil coalesces around you\.</message>
-      <message type='end'>An incandescent veil fades from you\.</message>
    </spell>
    <spell availability='self-cast' name='Rolling Krynch Stance' number='9620' type='timer'>
       <duration multicastable='no' span='refreshable'>240</duration>

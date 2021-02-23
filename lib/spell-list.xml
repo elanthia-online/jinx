@@ -844,7 +844,7 @@
    <spell availability='self-cast' name='Minor Summoning' number='725' type='utility'>
       <duration span='refreshable'>10 + (Spells.sorcerer/3.0) + (Skills.sldemonology/2.0)</duration>
       <cost type='mana'>25</cost>
-      <message type='start'>You trace an arcane sigil over your .+ while incanting\.  Your .+ glows momentarily and you succeed in opening an interplanar rift from which you manage to pull .+\.</message>
+      <message type='start'>You trace an arcane sigil over your .+ while incanting\.  Your .+ glows momentarily, and you succeed in opening an interplanar rift from which you manage to pull .+\.</message>
       <message type='start'>You trace the runes on .+ to strengthen the binding between your .+ and this plane\.  You feel a bit of power leeched from your .+ as a spark follows your finger&apos;s path across the .+\.</message>
       <message type='end'>You sense that you will not be able to control .+ much longer so you incant arcanely while concentrating upon the .+\.  You gesture vividly causing a small interplanar rift to open.  The .+ is pulled through the rift\.</message>
    </spell>

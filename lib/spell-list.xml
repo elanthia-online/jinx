@@ -1284,7 +1284,12 @@
    <spell availability='all' name='Confusion' number='1211' type='attack'>
       <cost type='mana'>11</cost>
    </spell>
-   <spell availability='all' name='Shroud of Deception' number='1212'/>
+   <spell availability='all' name='Shroud of Deception' number='1212' type='utility'>
+      <duration span='stackable'>20 + Spells.minormental</duration>
+      <cost type='mana'>12</cost>
+      <message type='start'>Your appearance shimmers briefly\.</message>
+      <message type='end'>Your appearance briefly shimmers\.</message>
+   </spell>
    <spell availability='self-cast' name='Mind over Body' number='1213' type='utility'>
       <duration max="599">599</duration>
       <cost type='mana'>13</cost>

@@ -2092,7 +2092,8 @@
       <duration persist-on-death='yes' real-time='yes'>15</duration>
       <message type='start'>[A-Z][a-z]+ says, &quot;Hmm, I&apos;ve got a task here|^[A-Z][a-z]+ says, &quot;I&apos;ve got a special mission for you.*</message>
       <message type='start'>You reach for the large board and select a posted task at random\.</message>
-      <message type='start'>You were tasked with (?:hunting|sinking|slaying) </message>
+      <message type='start'>^You were tasked with (?:hunting|sinking) </message>
+      <message type='start'>^You were tasked with slaying [0-9]+ pirates\.</message>
    </spell>
    <spell availability='self-cast' name='Next Group Bounty' number='9056' type='timer'>
       <duration persist-on-death='yes' real-time='yes'>15</duration>

@@ -1550,7 +1550,7 @@
       <message type='end'>The dim celadon wisps about your hands flare up once more and fade completely away\.</message>
    </spell>
    <spell availability='all' name='REIM Attack Boost' number='9301' type='bonus'>
-      <duration>2</duration>
+      <duration span='stackable'>1</duration>
       <bonus type='bolt-as'>25</bonus>
       <bonus type='physical-as'>25</bonus>
       <bonus type='elemental-cs'>15</bonus>
@@ -1563,7 +1563,7 @@
       <message type='end'>You cannot use these boosts outside of the settlement of Reim\.</message>
    </spell>
    <spell availability='all' name='REIM Defense Boost' number='9302' type='bonus'>
-      <duration>2</duration>
+      <duration span='stackable'>1</duration>
       <bonus type='bolt-ds'>25</bonus>
       <bonus type='physical-ds'>25</bonus>
       <bonus type='elemental-td'>15</bonus>

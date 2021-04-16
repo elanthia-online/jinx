@@ -1560,7 +1560,6 @@
       <cast-proc>fput &quot;reim boost attack&quot;</cast-proc>
       <message type='start'>Crackling wisps of ethereal energy surround your body, bolstering your attack\.</message>
       <message type='end'>The crackling wisps of ethereal energy surrounding your body fade away\.</message>
-      <message type='end'>You cannot use these boosts outside of the settlement of Reim\.</message>
    </spell>
    <spell availability='all' name='REIM Defense Boost' number='9302' type='bonus'>
       <duration span='stackable'>1</duration>
@@ -1573,7 +1572,6 @@
       <cast-proc>fput &quot;reim boost defense&quot;</cast-proc>
       <message type='start'>Tendrils of ethereal energy encase your body, bolstering your defense\.</message>
       <message type='end'>The tendrils of ethereal energy encasing your body fade away\.</message>
-      <message type='end'>You cannot use these boosts outside of the settlement of Reim\.</message>
    </spell>
    <spell availability='self-cast' name='Tortoise Stance' number='9401' type='defense'>
       <duration multicastable='no' span='refreshable'>240</duration>

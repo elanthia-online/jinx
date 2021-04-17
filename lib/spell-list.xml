@@ -1549,6 +1549,30 @@
       <message type='start'>A dim celadon wisp flares briefly about each of your hands, trailing soft pulses of residual light as they move\.</message>
       <message type='end'>The dim celadon wisps about your hands flare up once more and fade completely away\.</message>
    </spell>
+   <spell availability='all' name='REIM Attack Boost' number='9301' type='bonus'>
+      <duration span='stackable'>1</duration>
+      <bonus type='bolt-as'>25</bonus>
+      <bonus type='physical-as'>25</bonus>
+      <bonus type='elemental-cs'>15</bonus>
+      <bonus type='mental-cs'>15</bonus>
+      <bonus type='spirit-cs'>15</bonus>
+      <bonus type='sorcerer-cs'>15</bonus>
+      <cast-proc>fput &quot;reim boost attack&quot;</cast-proc>
+      <message type='start'>Crackling wisps of ethereal energy surround your body, bolstering your attack\.</message>
+      <message type='end'>The crackling wisps of ethereal energy surrounding your body fade away\.</message>
+   </spell>
+   <spell availability='all' name='REIM Defense Boost' number='9302' type='bonus'>
+      <duration span='stackable'>1</duration>
+      <bonus type='bolt-ds'>25</bonus>
+      <bonus type='physical-ds'>25</bonus>
+      <bonus type='elemental-td'>15</bonus>
+      <bonus type='mental-td'>15</bonus>
+      <bonus type='spirit-td'>15</bonus>
+      <bonus type='sorcerer-td'>15</bonus>
+      <cast-proc>fput &quot;reim boost defense&quot;</cast-proc>
+      <message type='start'>Tendrils of ethereal energy encase your body, bolstering your defense\.</message>
+      <message type='end'>The tendrils of ethereal energy encasing your body fade away\.</message>
+   </spell>
    <spell availability='self-cast' name='Tortoise Stance' number='9401' type='defense'>
       <duration multicastable='no' span='refreshable'>240</duration>
       <cost type='stamina'>20</cost>

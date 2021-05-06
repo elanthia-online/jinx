@@ -638,6 +638,7 @@
   <spell availability='self-cast' name='Rapid Fire Recovery' number='599'>
       <duration>if Skills.emc >= 199; 0; else; 1 + (((90 - (Skills.emc/2.2)).ceil + 1) / 60.0); end</duration>
       <message type='end'>You notice the feeling of elemental fatigue fade away\.</message>
+      <message type="end">Moisture beads on the surface of your skin then evaporates away, taking with it your recent elemental fatigue\.</message>
    </spell>
    <spell availability='all' name='Natural Colors' number='601' type='defense'>
       <duration span='stackable' multicastable='yes'>20 + Spells.ranger</duration>

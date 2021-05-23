@@ -2134,7 +2134,7 @@
    </spell>
    <spell availability='all' name='MStrike Cooldown' number='9005' type='timer'>
       <duration>1</duration>
-      <message type='start'>Your (?:flurry|series) of strikes(?: and ripostes)? leaves you (?:off-balance|winded) and out of position\.</message>
+      <message type='start'>Your (?:flurry|series) of (?:strikes|rapid shots)(?: and (?:ripostes|maneuvers))? leaves you (?:off-balance|winded) and out of position\.</message>
       <message type='end'>You feel recovered from your whirlwind flurry of strikes\.</message>
    </spell>
    <spell availability='all' name='Lichbane' number='9006' type='defense'>

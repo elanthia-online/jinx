@@ -9,12 +9,18 @@
                game: Gemstone
                tags: core
            required: Lich > 4.6.10
-            version: 1.18.4
+            version: 1.18.7
 
   Version Control:
     Major_change.feature_addition.bugfix
 
     changelog:
+      1.18.7 (2021-08-05):
+        Introduced first run flag for PSM check to prevent needless old CMan errors
+      1.18.6 (2021-07-31):
+        Changed CMan and added Armor, Feat, Shield and Weapon for PSM release
+      1.18.5 (2021-07-28):
+        Changed CMan regex for PSM release
       1.18.4 (2021-02-16):
         Added spellup code for Beacon of Courage
       1.18.3 (2021-02-10):
@@ -78,19 +84,6 @@ end
 hide_me
 setpriority(1)
 
-=begin
-get_lich_server = proc {
-  begin
-    lich_server = TCPSocket.open('216.224.171.85', 7153)
-  rescue
-    lich_server.close rescue()
-    lich_server = nil
-    echo "error connecting to server: #{$!}"
-  end
-  lich_server
-}
-=end
-
 sleep(0.1) until Char.name and not Char.name.empty?
 CharSettings['active_spells'] = Hash.new unless CharSettings['active_spells'].class == Hash
 CharSettings['bank_accounts'] = Hash.new unless CharSettings['bank_accounts'].class == Hash
@@ -98,6 +91,7 @@ CharSettings['show_circles']  = true     if CharSettings['show_circles'].nil?
 CharSettings['show_bonuses']  = false    if CharSettings['show_bonuses'].nil?
 CharSettings['show_messages'] = true     if CharSettings['show_messages'].nil?
 CharSettings['show_gift']     = true     if CharSettings['show_gift'].nil?
+CharSettings['need_psm_update']    = true     if CharSettings['need_psm_update'].nil?
 
 bank_titles = {
   "Wehnimer's Landing"          => [ '[First Elanith Bank, Teller]', '[Clenchfist Bros. Banking, Lobby]'],
@@ -122,23 +116,24 @@ end
 #
 # Load or get character information
 #
-if CharSettings['Stats'] and CharSettings['Skills'] and CharSettings['Spells'] and CharSettings['Society'] and CharSettings['citizenship'] and CharSettings['cman']
+if CharSettings['Stats'] and
+    CharSettings['Skills'] and
+    CharSettings['Spells'] and
+    CharSettings['Society'] and
+    CharSettings['citizenship']
+
   begin
     Stats.load_serialized   = CharSettings['Stats']
     Skills.load_serialized  = CharSettings['Skills']
     Spells.load_serialized  = CharSettings['Spells']
     Society.load_serialized = CharSettings['Society']
     Char.citizenship        = CharSettings['citizenship']
-    begin
-      CharSettings['cman'].each_pair { |cman,rank| CMan.send("#{cman}=", rank) }
     rescue
-      nil
-    end
-  rescue
     echo $!
     echo $!.backtrace[0..1]
     exit
   end
+
 else
   silence_me
 
@@ -161,7 +156,7 @@ else
   echo 'checking stats...'
   put 'info'
   wait_until { done }
-  
+
   hide_lines = done = false
   action = proc { |server_string|
     if hide_lines
@@ -181,7 +176,7 @@ else
   echo 'checking skills...'
   put 'skills'
   wait_until { done }
-  
+
   hide_lines = done = false
   action = proc { |server_string|
     if hide_lines
@@ -217,36 +212,62 @@ else
   put 'citizenship'
   wait_until { done }
 
-  hide_lines = done = false
+  silence_me
+
+end
+
+Gem::Version.new(LICH_VERSION) < Gem::Version.new('5.0.16') ? psm_abilities = [ 'CMan' ] : psm_abilities = [ 'Feat', 'Armor', 'Weapon', 'Shield', 'CMan' ]
+need_psm = []
+if CharSettings['need_psm_update']
+  need_psm = psm_abilities.dup
+  CharSettings['need_psm_update'] = false
+else
+  psm_abilities.each { |ability|
+    if !defined?(eval("#{ability}"))
+      pp "Encountered fatal error"
+      exit
+    elsif CharSettings["#{ability}".downcase].nil?
+      CharSettings["#{ability}".downcase] = Hash.new
+      need_psm << ability
+    else
+      begin
+        if !CharSettings["#{ability}".downcase].empty?
+          CharSettings["#{ability}".downcase].each_pair { |psm,rank| eval("#{ability}").send("#{psm}=", rank) }
+        end
+      rescue
+        pp "Bad juju happened here."
+        nil
+      end
+    end
+  }
+end
+
+silence_me
+
+need_psm.each { |get_ability|
+  hide_lines = @done = false
   action = proc { |server_string|
     if hide_lines
       if server_string =~ /<output class=""\/>|<prompt/
-        DownstreamHook.remove('infomon_cman')
-        done = true
+          DownstreamHook.remove('psmmon_finder')
+          @done = true
       end
       nil
-    else
-      if server_string =~ /You know absolutely nothing about Combat Maneuvers\./
-        DownstreamHook.remove('infomon_cman')
-        done = true
-        nil
-      elsif server_string =~ /#{Char.name}<\/a>, your Combat Maneuvers are as follows:/
+      elsif server_string =~ /#{Char.name}<\/a>, your (Combat Maneuvers|#{get_ability}.+?)\sare as follows:/
         hide_lines = true
         nil
       else
         server_string
       end
-    end
   }
-  DownstreamHook.add('infomon_cman', action)
-  echo 'checking combat maneuvers...'
-  put 'cman info'
-  wait_until { done }
-
-  echo 'done'
+    DownstreamHook.add('psmmon_finder', action)
+    echo "checking #{get_ability}..."
+    put ("#{get_ability}".downcase) + " info"
+    wait_until { @done }
+}
 
   silence_me
-end
+  echo 'done'
 
 #
 # Load spell timers
@@ -321,7 +342,7 @@ Thread.new {
     loop {
       sleep 300
       save_proc.call
-    } 
+    }
   rescue
     echo $!
     echo $!.backtrace[0..1]
@@ -366,7 +387,7 @@ Thread.new {
 #
 fix_gameobj_status = proc { |server_string|
   # false positive: shudders with sporadic convulsions as pearlescent ripples envelop .*? body
-#The earth elemental rumbles in agony as it teeters for a moment, then tumbles to the ground with a thundering crash! 
+#The earth elemental rumbles in agony as it teeters for a moment, then tumbles to the ground with a thundering crash!
   if server_string =~ /^(?:The fire in the|With a surprised grunt, the|A sudden blue fire bursts over the hair of a|You hear a sound like a weeping child as a white glow separates itself from the|A low gurgling sound comes from deep within the chest of the|The|A|One last prolonged bovine moan escapes from the) (?:<pushBold\/>)?<a.*?exist=["'](\-?[0-9]+)["'].*?>.*?<\/a>(?:<popBold\/>)?(?:'s)? (?:body as it rises, disappearing into the heavens|falls to the ground and dies(?:, its feelers twitching)?|falls back into a heap and dies|body goes rigid and collapses to the ground, dead|body goes rigid and collapses to the floor, dead|slowly settles to the ground and begins to dissipate|falls to the ground motionless|body goes rigid and <pushBold\/><a.*?>\w+<\/a><popBold\/> eyes roll back into <pushBold\/><a.*?>\w+<\/a><popBold\/> head as <pushBold\/><a.*?>\w+<\/a><popBold\/> dies|growls one last time, and crumples to the ground in a heap|spins backwards and collapses dead|falls to the ground as the stillness of death overtakes <pushBold\/><a.*?>(?:him|her|it)<\/a><popBold\/>|crumples to the ground motionless|howls in agony one last time and dies|howls in agony while falling to the ground motionless|moans pitifully as <pushBold\/><a.*?>(?:he|she|it)<\/a><popBold\/> is released|careens to the ground and crumples in a heap|hisses one last time and dies|flutters its wings one last time and dies|slumps to the ground with a final snarl|horn dims as (?:his|her) lifeforce fades away|blinks in astonishment, then collapses in a motionless heap|collapses in a heap, its huge girth shaking the floor around it|goes limp and .*? falls over as the fire slowly fades from .*? eyes|eyes slowly fades|sputters violently, cascading flames all around as .*? collapses in a final fiery display|falls to the ground in a clattering, motionless heap|goes limp and .*? falls over as the fire slowly fades from .*? eyes|collapses to the ground and shudders once before finally going still|crumbles into a pile of rubble|shudders once before .*? finally goes still|totters for a moment and then falls to the ground like a pillar, breaking into pieces that fly out in every direction|collapses into a pile of rubble|rumbles in agony as .*? teeters for a moment, then falls directly at you|twists and coils violently in .*? death throes, finally going still|twitches one final time before falling still upon the floor|, consuming .*? form in the space of a breath|screams one last time and dies|breathes .*? last gasp and dies|rolls over and dies|as .*? falls (?:slack|still) against the (?:floor|ground)|collapses to the ground, emits a final squeal, and dies|cries out in pain one last time and dies|crumples to a heap on the ground and dies|collapses to the ground, emits a final sigh, and dies|crumples to the ground and dies|lets out a final caterwaul and dies|screams evilly one last time and goes still|gurgles eerily and collapses into a puddle of water|shudders, then topples to the ground|shudders one last time before lying still|violently for a moment, then goes still|grumbles in pain one last time before lying still|rumbles in agony and goes still|falls to the ground dead|collapses to the ground, emits a final bleat, and dies|topples to the ground motionless|shudders violently for a moment, then goes still|rumbles in agony as .*? teeters for a moment, then tumbles to the ground with a thundering crash)[\.!]\r?\n?$/
     npc_id = $1
     if npc = GameObj.npcs.find { |obj| obj.id == npc_id }
@@ -562,7 +583,7 @@ while line = get
                             total_defense_string = ''
                             total_stat_string    = ''
                             total_skill_string   = ''
-                            
+
               total_offense_string = total_offense_string + total_boltAS.to_s + ' bAS, ' if total_boltAS != 0
               total_offense_string = total_offense_string + total_physicalAS.to_s + ' pAS, ' if total_physicalAS != 0
               total_offense_string = total_offense_string + total_elementalCS.to_s + ' elemCS, ' if total_elementalCS != 0
@@ -572,7 +593,7 @@ while line = get
                             total_offense_string = total_offense_string + total_damagefactor.to_s + '% DF ' if total_damagefactor != 0
                             total_offense_string = total_offense_string + total_uaf.to_s + ' UAF, ' if total_uaf != 0
                             total_offense_string.chop!.chop!
-                            
+
               total_defense_string = total_defense_string + total_boltDS.to_s + ' bDS, ' if total_boltDS != 0
               total_defense_string = total_defense_string + total_physicalDS.to_s + ' pDS, ' if total_physicalDS != 0
               total_defense_string = total_defense_string + total_elementalTD.to_s + ' elemTD, ' if total_elementalTD != 0
@@ -583,16 +604,16 @@ while line = get
                             total_defense_string = total_defense_string + total_asg.to_s + ' AsG, ' if total_asg != 0
                             total_defense_string = total_defense_string + total_fof_offset.to_s + ' FoF offset, ' if total_fof_offset != 0
                             total_defense_string.chop!.chop!
-                            
+
               total_stat_string = total_stat_string + total_strength.to_s + ' str, ' if total_strength != 0
                             total_stat_string = total_stat_string + total_constitution.to_s + ' con, ' if total_constitution != 0
                             total_stat_string = total_stat_string + total_health.to_s + ' health, ' if total_health != 0
                             total_stat_string.chop!.chop!
-                            
+
               total_skill_string = total_skill_string + total_dodging.to_s + ' dodge, ' if total_dodging != 0
                             total_skill_string = total_skill_string + total_combatmaneuvers.to_s + ' CM, ' if total_combatmaneuvers != 0
                             total_skill_string.chop!.chop!
-                            
+
                             output.concat("- Totals:\n")
               output.concat("  Offense: #{total_offense_string}\n") if total_offense_string.length > 0
                             output.concat("  Defense: #{total_defense_string}\n") if total_defense_string.length > 0
@@ -600,7 +621,7 @@ while line = get
                             output.concat("   Skills: #{total_skill_string}\n") if total_skill_string.length > 0
                             output.concat("\n\n")
             end
-          end         
+          end
           if CharSettings['show_gift']
             if CharSettings['lumnis start exp'] and CharSettings['lumnis 3x exp'] and CharSettings['lumnis 2x exp']
               exp_diff = Char.exp - CharSettings['lumnis start exp']
@@ -620,7 +641,7 @@ while line = get
               else
                 cycleminstime = ((CharSettings['lumnis next start'] - Time.now.to_i) / 60.00).as_time
                 days = cycleminstime.slice(/\d+/).to_i / 24
-                hours = cycleminstime.slice(/\d+/).to_i % 24 
+                hours = cycleminstime.slice(/\d+/).to_i % 24
                 mins, secs = cycleminstime.split(':')[-2..-1]
                 mins, secs = mins.to_i, secs.to_i
                 foo = Array.new
@@ -720,86 +741,9 @@ while line = get
           end
         elsif mobj.captures.first =~ /save/i
           echo 'this function no longer works'
-=begin
-          if $SAFE == 0
-            echo("Saving your current active spells on the Lich server for later use on a different computer... please be patient, it can sometimes take up to half a minute to initiate the connection...")
-            if lich_server = get_lich_server.call
-              lich_server.send('x',0)
-              lich_server.puts("#{XMLData.game}:#{XMLData.name}")
-              lich_server.binmode
-              remote_save = Hash.new
-              remote_save['active_spells'] = Hash.new
-              Spells.active.each { |spell|
-                if defined?(spell.real_time) and spell.real_time
-                  remote_save['active_spells'][spell.num.to_s] = Time.now.to_f + (spell.timeleft * 60)
-                else
-                  remote_save['active_spells'][spell.num.to_s] = spell.timeleft
-                end
-              }
-              remote_save['Spellsong'] = Spellsong.serialize
-              remote_save['Stats'] = Stats.serialize
-              remote_save['Skills'] = Skills.serialize
-              remote_save['Spells'] = Spells.serialize
-              remote_save['Gift'] = Gift.serialize
-              remote_save['Society'] = Society.serialize
-              remote_save['citizenship'] = Char.citizenship
-              lich_server.write(Marshal.dump(remote_save))
-              lich_server.close rescue()
-              echo
-              echo "Data has been cached remotely! Simply type '#{$clean_lich_char}magic load' when you wish to restore the current state of your character on the other computer."
-              echo
-            end
-          else
-            echo 'This script must be trusted to use this function. (;trust infomon)'
-          end
-=end
         elsif mobj.captures.first =~ /load/i
           echo 'this function no longer works'
-=begin
-          if $SAFE == 0
-            echo("Loading your current active spells from the remote cache on the Lich server... please be patient, it can sometimes take up to half a minute to initiate the connection...")
-            if lich_server = get_lich_server.call
-              lich_server.send("z",0)
-              lich_server.puts("#{XMLData.game}:#{XMLData.name}")
-              lich_server.binmode
-              begin
-                remote_load = Marshal.load(lich_server.read)
-                Stats.load_serialized   = remote_load['Stats']
-                Skills.load_serialized  = remote_load['Skills']
-                Spells.load_serialized  = remote_load['Spells']
-                Society.load_serialized = remote_load['Society']
-                Char.citizenship        = remote_load['citizenship']
-                remote_load['active_spells'].each_pair { |num,timeleft|
-                  if spell = Spell[num]
-                    if defined?(spell.real_time) and spell.real_time
-                      timeleft = (timeleft - Time.now.to_f)/60.0
-                      if timeleft > 0
-                        spell.timeleft = timeleft
-                        spell.active = true
-                      end
                     else
-                      spell.timeleft = timeleft
-                      spell.active = true
-                    end
-                  end
-                }
-                Spellsong.load_serialized = remote_load['Spellsong'] if remote_load['Spellsong']
-                Gift.load_serialized = remote_load['Gift'] if remote_load['Gift']
-              rescue
-                echo("There was an error loading your status information from the server.  Are you certain you have status info saved on it?  Type `;magic help' for more.")
-                lich_server.close rescue()
-                next
-              end
-              lich_server.close rescue()
-              echo
-              echo 'Data has been loaded!'
-              echo
-            end
-          else
-            echo 'This script must be trusted to use this function. (;trust infomon)'
-          end
-=end
-        else
           echo "Magic error! Type ';magic help' for usage information."
         end
       rescue
@@ -1165,52 +1109,55 @@ while line = get
         Stats.send("#{$1.downcase}=", [ $2.to_i + $3.to_i, $4.to_i + $5.to_i ])
       end
       CharSettings['Stats'] = Stats.serialize
-    elsif (line == 'You know absolutely nothing about Combat Maneuvers.') and defined?(CMan)
-      begin
-        CharSettings['cman'].keys.each { |cman| CMan[cman] = nil }
-      rescue
-        nil
-      end
-      CharSettings['cman'] = Hash.new
-    elsif (line =~ /#{Char.name}, your Combat Maneuvers are as follows:/) and defined?(CMan)
-      begin
-        CharSettings['cman'].keys.each { |cman| CMan[cman] = nil }
-      rescue
-        nil
-      end
-      CharSettings['cman'] = Hash.new
-      get
-      while get =~ /^([A-z\s']+)\s+([a-z0-9]+)\s+([0-9])\s*$|Skill name|\-\-\-\-/
-                cman_rank = $3
-        cman_name = $1.strip.downcase.gsub(/[\s\-]/,'_').gsub("'", "")
-        
-        CharSettings['cman'][cman_name] = cman_rank.to_i
+    ## Updating Infomon for PSM3 release with PSM Abilities (CMan, Armor, Feat, Shield, Weapon)
+    ## structure of messaging consistent between all PSM categories
+    ## #{Char.name}, your Combat Maneuvers are as follows:
+    ## (blank line)
+    ##  Skill                          Mnemonic        Ranks Category        Subcategory
+    ##  --------------------------------------------------------------------------------
+    ## (skill line or blank line if no skill)
+    ##
+    elsif (line =~ /#{Char.name}, your (Combat|Armor|Feat|Shield|Weapon).*? are as follows:/)
+      psm_category = $1.dup
+      psm_category = "CMan" if psm_category == "Combat"
+      CharSettings["#{psm_category}".downcase] = Hash.new
+      2.times{get}
+      while get? =~ /^\s+([A-z\s']+)\s+([a-z0-9]+)\s+(\d)\/(\d).*?$/
+        mnemonic_psm = $2
+        rank_psm = $3
+        total_rank_psm = $4
+        name_psm = $1.strip.downcase.gsub(/[\s\-]/,'_').gsub("'", "")
+        CharSettings["#{psm_category}".downcase][name_psm] = rank_psm.to_i
         begin
-          CMan[cman_name] = cman_rank
+          eval("#{psm_category}")[name_psm] = rank_psm
         rescue
           nil
         end
       end
-    elsif (line =~ /^You have now achieved the (first|second|third|fourth|fifth) rank of (.*)\.$/)
-      fix_num = { 'first' => 1, 'second' => 2, 'third' => 3, 'fourth' => 4, 'fifth' => 5 }
-      cman_name = $2
-      cman_rank = $1
-      CharSettings['cman'][cman_name.gsub(/[\s\-]/,'_').gsub("'", "").downcase] = fix_num[cman_rank]
+    elsif (line =~ /^You have now achieved rank (\d) of (.*), costing \d+ (Combat|Armor|Feat|Shield)/)
+      rank_learned = $1
+      psm_learned = $3
+      name_learned = $2
+      psm_learned = "CMan" if psm_learned == "Combat"
+      CharSettings["#{psm_learned}".downcase][name_learned.strip.downcase.gsub(/[\s\-]/,'_').gsub("'", "")] = rank_learned.to_i
       begin
-        CMan[cman_name] = fix_num[cman_rank]
+        eval("#{psm_learned}")[name_learned.strip.downcase.gsub(/[\s\-]/,'_').gsub("'", "")] = rank_learned
       rescue
         nil
       end
-    elsif (line =~ /^You decide to unlearn your (first|second|third|fourth|fifth) rank of (.*),/)
-      fix_num = { 'first' => 0, 'second' => 1, 'third' => 2, 'fourth' => 3, 'fifth' => 4 }
-      cman_name = $2
-      cman_rank = $1
-      CharSettings['cman'][cman_name.gsub(/[\s\-]/,'_').gsub("'", "").downcase] = fix_num[cman_rank]
+    elsif (line =~ /^You decide to unlearn rank (\d) of (.*), regaining \d+ (Combat|Armor|Shield)/)
+      fix_num = { '1' => 0, '2' => 1, '3' => 2, '4' => 3, '5' => 4 }
+      rank_unlearned = $1
+      name_unlearned = $2.strip.downcase
+      psm_unlearned = $3
+      psm_unlearned = "CMan" if psm_unlearned == "Combat"
+      CharSettings["#{psm_unlearned}".downcase][name_unlearned.gsub(/[\s\-]/,'_').gsub("'", "")] = fix_num[rank_unlearned]
       begin
-        CMan[cman_name] = fix_num[cman_rank]
+        eval("#{psm_unlearned}")[name_unlearned] = fix_num[rank_unlearned]
       rescue
         nil
       end
+
     elsif line =~ /^\.\.\.departing in ([0-9]+) mins\.\.\.$/
       Spell[6666].putup
       Spell[6666].timeleft = $1.to_i
@@ -1321,7 +1268,7 @@ while line = get
         total_mana_drained = total_mana_drained - mana_recovered + mana_drained
 
         if spell.active?
-          spell.timeleft = (total_mana_drained/rate.to_f).ceil - (1 - spell.timeleft % 1) 
+          spell.timeleft = (total_mana_drained/rate.to_f).ceil - (1 - spell.timeleft % 1)
         else
           spell.putup
           spell.timeleft = (total_mana_drained/rate.to_f).ceil
@@ -1334,7 +1281,7 @@ while line = get
       elsif (spell.num.to_i >= 9000 and spell.num.to_i != 9011) or (spell.num.to_i == 725)
         spell.putup
                 respond "[ #{spell.name}: +#{spell.time_per.as_time}, #{spell.remaining} remaining. ]" if CharSettings['show_messages']
-                
+
                 # Assume Aspect cooldowns
                 if spell.num.to_i > 9013 and spell.num.to_i < 9042
           cooldown_spell = Spell[spell.num+1]
@@ -1491,7 +1438,7 @@ while line = get
             spell_time = 599.0
           else
             spell_time = ($3.to_i * 60) + $4.to_i + ($5.to_i / 60.0)
-          end 
+          end
           if spell_name == 'Raise Dead Recovery'
             # fixme
             spell_name = 'Raise Dead Cooldown'
@@ -1542,7 +1489,7 @@ while line = get
       put 'info'
       script.silent = save_silent
       wait_until { done }
-  
+
       hide_lines = done = false
       action = proc { |server_string|
         if hide_lines

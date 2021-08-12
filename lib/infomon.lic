@@ -1,80 +1,41 @@
 =begin
 
-    This script tracks a bunch of info about your character that isn't available as XML, such as your skills and stats, the spells you have on and their duration, gift of lumis, and other random things.
+  infomon.lic: This script tracks a bunch of info about your character that isn't available as XML, such as your skills and stats, the spells you have on and their duration, gift of lumis, and other random things
     Use   ;magic   to see what spells you have on.
     Use   ;banks   to see how poor you are.
 
-             author: Tillmen (tillmen@lichproject.org)
-    original author: Shaelun
-               game: Gemstone
-               tags: core
-           required: Lich > 4.6.10
-            version: 1.18.7
+    maintainer: elanthia-online
+  contributers: Tillmen, Shaelun, Athias
+          game: Gemstone
+          tags: core
+      required: Lich > 4.6.10
+       version: 1.18.8
+        Source: https://github.com/elanthia-online/jinx
+    Alt Source: https://github.com/elanthia-online/lich-5
 
   Version Control:
     Major_change.feature_addition.bugfix
 
-    changelog:
-      1.18.7 (2021-08-05):
-        Introduced first run flag for PSM check to prevent needless old CMan errors
-      1.18.6 (2021-07-31):
-        Changed CMan and added Armor, Feat, Shield and Weapon for PSM release
-      1.18.5 (2021-07-28):
-        Changed CMan regex for PSM release
-      1.18.4 (2021-02-16):
-        Added spellup code for Beacon of Courage
-      1.18.3 (2021-02-10):
-        Fixed game code for test instance to GST from GSTest
-      1.18.2 (2021-01-06):
-        Previous fix exposed different bug. Updated infomon to maintain bind spell
-        state in both $infomon_bound (for checkbound) and Spell[214].active?
-      1.18.1 (2021-01-05):
-        Typo for infomon_bound with envelopes should be envelop
-      1.18 (2021-01-01):
-        update stat parsing regex to handle negative enhanced bonuses
-      1.17 (2020-12-19):
-        Recorded previous commageddon fixes in change log
-        Updated formatting for viewer friendly goodness
-      1.16 (2018-07-30):
-        Rename Core Tap Recovery to match spell active
-      1.15 (2018-07-22):
-        improved tracking for Core Tap
-        fix spell active match for Cloak of Shadows
-      1.14 (2017-10-08):
-        detect Mage Armor in spell active
+  1.18.8 (2021-08-12):
+    Bugfixes for new spell active format
+    Standardized Header information
+    Removed long-standing changelog in favor of github history moving forward
+  1.18.7 (2021-08-05):
+    Introduced first run flag for PSM check to prevent needless old CMan errors
+  1.18.6 (2021-07-31):
+    Changed CMan and added Armor, Feat, Shield and Weapon for PSM release
+  1.18.5 (2021-07-28):
+    Changed CMan regex for PSM release
+  1.18.4 (2021-02-16):
+    Added spellup code for Beacon of Courage
+  1.18.3 (2021-02-10):
+    Fixed game code for test instance to GST from GSTest
+  1.18.2 (2021-01-06):
+    Previous fix exposed different bug. Updated infomon to maintain bind spell
+    state in both $infomon_bound (for checkbound) and Spell[214].active?
+  1.18.1 (2021-01-05):
+    Typo for infomon_bound with envelopes should be envelop
 =end
-=begin
-
-      1.13 (2017-01-15):
-        rapid fire recovery/penalty fixes
-        somewhat fix lumnis tracking for the new system
-      1.12 (2017-01-09):
-        fix mana leech cooldown timer (Drafix)
-      1.11 (2016-09-19):
-        added Duck and Weave cman support
-      1.10 (2016-05-15):
-        added death message for ants to the missing xml workaround
-      1.9 (2016-01-13):
-        update lumnis start time from "lumnis info"
-      1.8 (2015-07-02):
-        add support for Medatative Resistance (Takoa)
-      1.7 (2015-05-28):
-        add FoF offset to magic bonuses output
-      1.6 (2015-05-21):
-        recognize Vornavis Caravansary bank as a Vornavis bank
-      1.5 (2015-02-21):
-        remove broken ;magic save/load commands
-      1.4 (2015-02-01):
-        added minotaur magus death message for xml fail workaround
-      1.3 (2014-12-17):
-        recognize spells in "spell active" that have an "Indefinite" time left
-      1.2 (2014-11-14):
-        attempted bugfix
-      1.1 (2014-11-10):
-        don't define check(sleeping|bound|silenced|calmed|cutthroat)
-
-=end
-
 
 unless XMLData.game =~ /^(?:GSF|GSIV|GSPlat|GST)$/
   echo "This script is meant for Gemstone Prime, Platinum, or Shattered.  It will likely cause problems on whatever game you're trying to run it on..."
